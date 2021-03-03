@@ -1,0 +1,3 @@
+[submodule "manifests/apps/fossFundApp-k8s"]
+	path = manifests/apps/fossFundApp-k8s
+	url = git@github.com:JH-OSPO/fossFundApp-k8s.git
