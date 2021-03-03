@@ -1,0 +1,18 @@
+
+.terraform
+.terraform*
+plan*
+terraform.tfstate*
+kubeconfig*
+manifests/infrastructure/external-dns*
+manifests/infrastructure/kube-system/master.key.yaml
+
+# ignore auto generated files for persistent volumes
+*pvc.yaml
+*pv.yaml
+manifests/infrastructure/*/volumes/*
+!manifests/infrastructure*/volumes/kustomization.yaml
+
+# ignore grype logs
+*.grypelog
+*.grypelog*
