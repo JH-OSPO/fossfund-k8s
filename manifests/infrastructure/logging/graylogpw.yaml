@@ -1,0 +1,15 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: graylogpw
+  namespace: logging
+spec:
+  encryptedData:
+    graylogpw: AgAWq1X9KF2GP8N7I0YWR9EzgriQo1bairQhN5RvgnomEoLgVJM9dRRXHxiMflJBWocdYLwMgcIO/zRVcpubMYbCQ/1pwh8DCWnvmJPPPxuduhZeak0kiifoGIO/jI9jg4ipu4joUucvje9pNWNLKLKNWKLbt9rD94t3ZOavfSM61K8gUH8ior70t9VOuh646O+Uz9PTdvj4ND03A50RMUm17Xe+woBmFbCB+/Usdh0SJirrZdGWQOtPHdoXl0eEbRtpDa+pEhIfNqq6PsYK0wM7cIj0EXqIC9B6YPdqKPukO9enbtpBrLMjjBrAdPRkMKF6FNGTuyB+SZYMWEAZmQDdvhBrMcMOwEHUsPC1ivD4PEjw/ocbsv5IUkmjG6uZHs6Rj75gbvqlPIM7YT882LxYEiUddZfEivWkEwd6z9W55Q5p6c7vqZV6y1N3M4IRE4PjltoSkmhvD3f0Yo+5Eg/tnZ+A3JbCnFcHowhGIslsliRdRU6aXGNQ7QD1142aib9nTmwBNxR8v2z9lhvwHXLv5BHqhInrPlqLdool79VzvKFRFi7OhH+ghTIFkNwOXbdZzLP0OzQKY4We6ojjBLxm4z47GVF1xI6WvFt1oCwYX7CyJMxFUGXFzBBdNZ/iGDJO9ApcCD/B+koPmydBbp7I4qXvHWJFbOKkZHBJbJCviWRgOhw4KMzAfPI4u2+JB7SRF/nzKLsv+t61l7iNwrN0YFBQEAVdGI5CYzYMwtXUAYSLirw6/n0R3w1Xh1BjWq+c+s89fA/AA5WjBOkOrR97xw==
+  template:
+    metadata:
+      creationTimestamp: null
+      name: graylogpw
+      namespace: logging
+

@@ -1,0 +1,115 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: graylog3
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    external-dns.alpha.kubernetes.io/hostname: graylog.ops-k8s.cloud.library.jhu.edu
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: arn:aws:acm:us-east-1:128453753102:certificate/b5164d2c-d4fb-4608-9cd2-8530488815ef
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "9000"
+spec:
+  type: LoadBalancer
+  selector:
+    service: graylog-deploy
+  ports:
+  - name: "9000"
+    port: 9000
+    targetPort: 9000
+    #nodePort: 30003
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: graylog3-ext-input
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    external-dns.alpha.kubernetes.io/hostname: graylog-in.ops-k8s.cloud.library.jhu.edu
+spec:
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+  - "34.204.123.45/32" # idc-k8s cluster
+  - "128.220.161.107/32" # JHU Firewall for internal resources
+  selector:
+    service: graylog-deploy
+  ports:
+  - name: "12201"
+    port: 12201
+    targetPort: 12201
+    #nodePort: 30004
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: graylog3-local-input
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-type: "nlb"
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  selector:
+    service: graylog-deploy
+  ports:
+  - name: "12201"
+    port: 12201
+    targetPort: 12201
+    #nodePort: 30004
+---  
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: graylog-deploy
+  labels:
+    service: graylog-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: graylog-deploy
+  template:
+    metadata:
+      labels:
+        service: graylog-deploy
+    spec:
+      containers:
+      - name: graylog3
+        image: graylog/graylog:3.3.8-1
+        env:
+        - name: GRAYLOG_PASSWORD_SECRET
+          valueFrom: 
+            secretKeyRef:
+              name: graylogsecret
+              key: graylogsecret
+        - name: GRAYLOG_ROOT_PASSWORD_SHA2
+          valueFrom:
+            secretKeyRef:
+              name: graylogpw
+              key: graylogpw
+        - name: GRAYLOG_HTTP_EXTERNAL_URI
+          value: "https://graylog.ops-k8s.cloud.library.jhu.edu:9000/"
+        - name: GRAYLOG_ELASTICSEARCH_HOSTS
+          value: http://es6:9200
+        - name: GRAYLOG_MONGODB_URI
+          value: mongodb://mongo:27017/graylogl
+        - name: GRAYLOG_CONTENT_PACKS_DIR
+          value: /tmp/content-packs
+        - name: GRAYLOG_CONTENT_PACKS_LOADER_ENABLED
+          value: "true"
+        - name: GRAYLOG_CONTENT_PACKS_AUTO_INSTALL
+          value: gelf-content-pack.json
+        ports:
+        - containerPort: 9000
+        - containerPort: 12201
+        volumeMounts:
+        - name: gelf-tcp-content-pack
+          mountPath: /tmp/content-packs
+        - mountPath: /usr/share/graylog/data/journal
+          name: graylog-data
+      volumes:
+      - name: gelf-tcp-content-pack
+        configMap:
+          name: gelf-tcp-content-pack
+      - name: graylog-data
+        persistentVolumeClaim:
+          claimName: graylog-pv
+
