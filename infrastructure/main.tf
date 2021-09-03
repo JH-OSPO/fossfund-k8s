@@ -31,7 +31,7 @@ module "tf_k8s_cluster" {
   ssh_key_public  = var.ssh_key_public
   rg_name         = var.rg_name
   workers         = var.workers
-  cluster_version = "1.18"
+  cluster_version = "1.21"
 
   # uncomment and set in terraform.tfvars to override default
   # instance_size  = var.instance_size
