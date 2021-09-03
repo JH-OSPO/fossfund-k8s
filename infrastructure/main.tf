@@ -69,7 +69,7 @@ module "k8s_externaldns" {
 }
 
 module "graylog_pv" {
-  source = "git::git@github.com:jhu-library-operations/tf-mod-aws-efs-pv-k8s.git"
+  source = "git::git@github.com:jhu-library-operations/tf-mod-aws-efs-pv-k8s.git?ref=8219dfed2ff39e5e72086db05592787ab52afcac"
   project_name          = var.project_prefix
   output_path           = "../manifests/infrastructure/"
   subnet_ids            = module.tf_k8s_cluster.subnet_ids
@@ -94,7 +94,7 @@ module "graylog_pv" {
 }
 
 module "graylog_mongo_pv" {
-  source = "git::git@github.com:jhu-library-operations/tf-mod-aws-efs-pv-k8s.git"
+  source = "git::git@github.com:jhu-library-operations/tf-mod-aws-efs-pv-k8s.git?ref=8219dfed2ff39e5e72086db05592787ab52afcac"
   #source = "../../tf-mod-aws-efs-pv-k8s"
   project_name          = var.project_prefix
   output_path           = "../manifests/infrastructure/"
@@ -110,7 +110,7 @@ module "graylog_mongo_pv" {
 }
 
 module "graylog_es_pv" {
-  source = "git::git@github.com:jhu-library-operations/tf-mod-aws-efs-pv-k8s.git"
+  source = "git::git@github.com:jhu-library-operations/tf-mod-aws-efs-pv-k8s.git?ref=8219dfed2ff39e5e72086db05592787ab52afcac"
   #source                = "../../tf-mod-aws-efs-pv-k8s"
   project_name          = var.project_prefix
   output_path           = "../manifests/infrastructure/"
