@@ -31,7 +31,7 @@ module "tf_k8s_cluster" {
   ssh_key_public  = var.ssh_key_public
   rg_name         = var.rg_name
   workers         = var.workers
-  cluster_version = "1.18"
+  cluster_version = "1.21"
 
   # uncomment and set in terraform.tfvars to override default
   # instance_size  = var.instance_size
@@ -94,7 +94,7 @@ module "graylog_pv" {
 }
 
 module "graylog_mongo_pv" {
-  source = "git::git@github.com:jhu-library-operations/tf-mod-aws-efs-pv-k8s.git"
+  source = "git::git@github.com:jhu-library-operations/tf-mod-aws-efs-pv-k8s.git?ref=5a9999d986886d3c41ac2ca114dead5a729c0326"
   #source = "../../tf-mod-aws-efs-pv-k8s"
   project_name          = var.project_prefix
   output_path           = "../manifests/infrastructure/"

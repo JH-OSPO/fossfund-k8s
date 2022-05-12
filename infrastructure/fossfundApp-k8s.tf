@@ -6,7 +6,7 @@ locals {
 }
 
 module "prod-mariadb-pv" {
-  source = "git::git@github.com:jhu-library-operations/tf-mod-aws-efs-pv-k8s.git"
+  source = "git::git@github.com:jhu-library-operations/tf-mod-aws-efs-pv-k8s.git?ref=5a9999d986886d3c41ac2ca114dead5a729c0326"
   project_name          = local.app_name
   output_path           = format("../manifests/apps/%s/overlays/aws/", local.app_name)
   subnet_ids            = module.tf_k8s_cluster.subnet_ids
